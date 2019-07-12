@@ -66,6 +66,6 @@ func (srv *TokenService) Encode(user *pb.User) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	// Sign token and return
-	token,err := token.SignedString(key)
-	return token,err
+	tk,err := token.SignedString(key)
+	return tk,err
 }

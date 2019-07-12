@@ -1,12 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	pb "github.com/mikedutuandu/shippy-user-service/proto/auth"
 	"github.com/micro/go-micro"
-	_ "github.com/micro/go-plugins/registry/mdns"
-	k8s "github.com/micro/kubernetes/go/micro"
+
 )
 
 func main() {
@@ -30,24 +30,19 @@ func main() {
 
 	tokenService := &TokenService{repo}
 
-	// Create a new service. Optionally include some options here.
-	srv := k8s.NewService(
 
-		// This name must match the package name given in your protobuf definition
+	srv := micro.NewService(
 		micro.Name("shippy.auth"),
 	)
 
-	// Init will parse the command line flags.
 	srv.Init()
 
-	// Will comment this out now to save having to run this locally
-	// publisher := micro.NewPublisher("user.created", srv.Client())
+
 
 	// Register handler
 	pb.RegisterAuthHandler(srv.Server(), &service{repo, tokenService})
 
-	// Run the server
 	if err := srv.Run(); err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
 }
