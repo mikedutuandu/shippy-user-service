@@ -1,9 +1,6 @@
 build:
-	protoc -I/usr/local/include -I. \
-		--go_out=plugins=micro:. \
-		proto/auth/auth.proto
-	docker build -t eu.gcr.io/shippy-freight/user:latest .
-	docker push eu.gcr.io/shippy-freight/user:latest
+	protoc -I. --proto_path=$GOPATH/src:. --micro_out=. --go_out=. proto/auth/auth.proto
+	docker build -t shippy-user-service .
 
 run:
 	docker run --net="host" \
@@ -15,6 +12,3 @@ run:
 		-e MICRO_REGISTRY=mdns \
 		shippy-user-service
 
-deploy:
-	sed "s/{{ UPDATED_AT }}/$(shell date)/g" ./deployments/deployment.tmpl > ./deployments/deployment.yml
-	kubectl replace -f ./deployments/deployment.yml

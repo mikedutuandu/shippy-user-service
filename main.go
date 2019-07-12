@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	pb "github.com/EwanValentine/shippy-user-service/proto/auth"
+	pb "github.com/mikedutuandu/shippy-user-service/proto/auth"
 	"github.com/micro/go-micro"
 	_ "github.com/micro/go-plugins/registry/mdns"
 	k8s "github.com/micro/kubernetes/go/micro"

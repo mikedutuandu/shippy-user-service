@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 
-	pb "github.com/EwanValentine/shippy-user-service/proto/auth"
+	pb "github.com/mikedutuandu/shippy-user-service/proto/auth"
 	"github.com/dgrijalva/jwt-go"
 )
 
@@ -66,5 +66,6 @@ func (srv *TokenService) Encode(user *pb.User) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	// Sign token and return
-	return token.SignedString(key)
+	token,err := token.SignedString(key)
+	return token,err
 }
